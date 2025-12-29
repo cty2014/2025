@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,38 +15,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 創建郵件傳輸器
-    let transporter;
-    
-    // 如果沒有配置 SMTP，使用測試模式（僅用於開發）
-    if (!process.env.SMTP_USER || !process.env.SMTP_PASSWORD) {
-      // 使用測試帳號（僅用於開發測試）
-      const testAccount = await nodemailer.createTestAccount();
-      transporter = nodemailer.createTransport({
-        host: "smtp.ethereal.email",
-        port: 587,
-        secure: false,
-        auth: {
-          user: testAccount.user,
-          pass: testAccount.pass,
-        },
-      });
-    } else {
-      // 使用環境變數配置 SMTP
-      transporter = nodemailer.createTransport({
-        host: process.env.SMTP_HOST || "smtp.gmail.com",
-        port: parseInt(process.env.SMTP_PORT || "587"),
-        secure: false, // true for 465, false for other ports
-        auth: {
-          user: process.env.SMTP_USER,
-          pass: process.env.SMTP_PASSWORD,
-        },
-      });
+    // 檢查是否有 Resend API Key
+    if (!process.env.RESEND_API_KEY) {
+      console.error("RESEND_API_KEY 未設定");
+      return NextResponse.json(
+        { error: "郵件服務未正確配置，請聯繫網站管理員。" },
+        { status: 500 }
+      );
     }
 
-    // 郵件內容
-    const mailOptions = {
-      from: process.env.SMTP_FROM || `"${name}" <${email}>`,
+    // 發送郵件
+    const { data, error } = await resend.emails.send({
+      from: process.env.RESEND_FROM_EMAIL || "WiseCom Website <onboarding@resend.dev>",
       to: "info@wisecom.biz",
       replyTo: email,
       subject: `來自網站聯絡表單的訊息${company ? ` - ${company}` : ""}`,
@@ -67,15 +49,17 @@ ${company ? `公司：${company}\n` : ""}
 訊息內容：
 ${message}
       `,
-    };
+    });
 
-    // 發送郵件
-    const info = await transporter.sendMail(mailOptions);
-
-    // 如果是測試模式，輸出測試郵件 URL
-    if (!process.env.SMTP_USER || !process.env.SMTP_PASSWORD) {
-      console.log("測試郵件已發送:", nodemailer.getTestMessageUrl(info));
+    if (error) {
+      console.error("Resend 錯誤:", error);
+      return NextResponse.json(
+        { error: "發送訊息時發生錯誤，請稍後再試。" },
+        { status: 500 }
+      );
     }
+
+    console.log("郵件已成功發送:", data);
 
     return NextResponse.json(
       { message: "訊息已成功發送！我們會盡快與您聯繫。" },
