@@ -1,10 +1,12 @@
 import Link from "next/link";
+import BackgroundAnimation from "@/components/BackgroundAnimation";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-black relative">
+      <BackgroundAnimation />
       {/* Hero Section - Zetta VP Style */}
-      <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
+      <section className="relative z-10 min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto text-center">
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white mb-6 sm:mb-8 leading-tight">
             First Believers in<br />
@@ -28,7 +30,7 @@ export default function Home() {
       </section>
 
       {/* Mission Statement - Zetta VP Style */}
-      <section className="py-20 sm:py-24 md:py-32 bg-black border-t border-white/15">
+      <section className="relative z-10 py-20 sm:py-24 md:py-32 bg-black border-t border-white/15">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 sm:mb-8 leading-tight">
             Our aim is to be the most important partner to the most impactful AI and infrastructure companies

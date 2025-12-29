@@ -1,3 +1,5 @@
+import ProjectsBackgroundAnimation from "@/components/ProjectsBackgroundAnimation";
+
 export default function Projects() {
   const projects = [
     {
@@ -47,8 +49,9 @@ export default function Projects() {
   ];
 
   return (
-    <div className="min-h-screen py-8 sm:py-12 bg-black">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-8 sm:py-12 bg-black relative">
+      <ProjectsBackgroundAnimation />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="text-center mb-10 sm:mb-16">
           <div className="inline-block mb-3 sm:mb-4">

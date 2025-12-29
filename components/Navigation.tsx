@@ -10,7 +10,7 @@ export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { href: "/projects", label: "Companies" },
+    { href: "/projects", label: "Projects" },
     { href: "/build-with-us", label: "Build With Us" },
     { href: "/about", label: "Team" },
     { href: "/contact", label: "Contact" },

@@ -6,9 +6,6 @@ export default function BuildWithUs() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-10 sm:mb-16">
-          <div className="inline-block mb-3 sm:mb-4">
-            <span className="text-white/40 text-base sm:text-lg md:text-xl lg:text-2xl font-mono tracking-[0.2em] uppercase font-normal">BUILD WITH US</span>
-          </div>
           <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 px-2">
             <span className="text-white">Build with us</span>
           </h1>
