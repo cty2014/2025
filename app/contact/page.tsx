@@ -9,13 +9,48 @@ export default function Contact() {
     company: "",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: "success" | "error" | null;
+    message: string;
+  }>({ type: null, message: "" });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log("Form submitted:", formData);
-    alert("Thank you for your message! We will contact you soon.");
-    setFormData({ name: "", email: "", company: "", message: "" });
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: "" });
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus({
+          type: "success",
+          message: data.message || "訊息已成功發送！我們會盡快與您聯繫。",
+        });
+        setFormData({ name: "", email: "", company: "", message: "" });
+      } else {
+        setSubmitStatus({
+          type: "error",
+          message: data.error || "發送訊息時發生錯誤，請稍後再試。",
+        });
+      }
+    } catch (error) {
+      setSubmitStatus({
+        type: "error",
+        message: "發送訊息時發生錯誤，請稍後再試。",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (
@@ -48,6 +83,17 @@ export default function Contact() {
           {/* Contact Form */}
           <div className="bg-black border border-white/15 rounded-none p-6 sm:p-8">
             <h2 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6">Send Message</h2>
+            {submitStatus.type && (
+              <div
+                className={`mb-4 sm:mb-6 p-3 sm:p-4 rounded-none border ${
+                  submitStatus.type === "success"
+                    ? "bg-green-500/10 border-green-500/50 text-green-400"
+                    : "bg-red-500/10 border-red-500/50 text-red-400"
+                }`}
+              >
+                <p className="text-sm sm:text-base">{submitStatus.message}</p>
+              </div>
+            )}
             <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
               <div>
                 <label htmlFor="name" className="block text-xs sm:text-sm font-medium text-white/60 mb-2">
@@ -110,9 +156,10 @@ export default function Contact() {
               </div>
               <button
                 type="submit"
-                className="w-full bg-white text-black py-2.5 sm:py-3 rounded-none text-sm sm:text-base font-medium hover:bg-white/90 transition-all"
+                disabled={isSubmitting}
+                className="w-full bg-white text-black py-2.5 sm:py-3 rounded-none text-sm sm:text-base font-medium hover:bg-white/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Send Message
+                {isSubmitting ? "發送中..." : "Send Message"}
               </button>
             </form>
           </div>
