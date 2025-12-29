@@ -64,6 +64,14 @@ export default function BackgroundAnimation() {
       canvas.width = canvasWidth;
       canvas.height = canvasHeight;
       
+      // Update canvas size for all particles and data streams
+      particles.forEach(particle => {
+        particle.updateCanvasSize(canvasWidth, canvasHeight);
+      });
+      dataStreams.forEach(stream => {
+        stream.updateCanvasSize(canvasWidth, canvasHeight);
+      });
+      
       // If height changed significantly, reinitialize particles
       if (Math.abs(canvasHeight - oldHeight) > 100) {
         initializeParticles();
@@ -83,6 +91,8 @@ export default function BackgroundAnimation() {
       radius: number;
       opacity: number;
       targetOpacity: number;
+      canvasWidth: number;
+      canvasHeight: number;
 
       constructor(canvasWidth: number, canvasHeight: number) {
         this.x = Math.random() * canvasWidth;
@@ -92,6 +102,8 @@ export default function BackgroundAnimation() {
         this.radius = Math.random() * 1.5 + 0.5;
         this.opacity = Math.random() * 0.3 + 0.1;
         this.targetOpacity = this.opacity;
+        this.canvasWidth = canvasWidth;
+        this.canvasHeight = canvasHeight;
       }
 
       update() {
@@ -99,16 +111,21 @@ export default function BackgroundAnimation() {
         this.y += this.vy;
 
         // Wrap around edges
-        if (this.x < 0) this.x = canvas.width;
-        if (this.x > canvas.width) this.x = 0;
-        if (this.y < 0) this.y = canvas.height;
-        if (this.y > canvas.height) this.y = 0;
+        if (this.x < 0) this.x = this.canvasWidth;
+        if (this.x > this.canvasWidth) this.x = 0;
+        if (this.y < 0) this.y = this.canvasHeight;
+        if (this.y > this.canvasHeight) this.y = 0;
 
         // Fade in/out effect
         this.opacity += (this.targetOpacity - this.opacity) * 0.02;
         if (Math.random() < 0.005) {
           this.targetOpacity = Math.random() * 0.3 + 0.1;
         }
+      }
+
+      updateCanvasSize(width: number, height: number) {
+        this.canvasWidth = width;
+        this.canvasHeight = height;
       }
 
       draw() {
@@ -240,21 +257,30 @@ export default function BackgroundAnimation() {
       speed: number;
       size: number;
       opacity: number;
+      canvasWidth: number;
+      canvasHeight: number;
 
-      constructor() {
-        this.x = Math.random() * canvasWidth;
-        this.y = Math.random() * canvasHeight;
+      constructor(width: number, height: number) {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
         this.speed = Math.random() * 1.5 + 0.5;
         this.size = Math.random() * 0.8 + 0.3; // Smaller size for better performance
         this.opacity = Math.random() * 0.2 + 0.05; // Lower opacity for density
+        this.canvasWidth = width;
+        this.canvasHeight = height;
       }
 
       update() {
         this.y += this.speed;
-        if (this.y > canvasHeight + 10) {
+        if (this.y > this.canvasHeight + 10) {
           this.y = -10;
-          this.x = Math.random() * canvasWidth;
+          this.x = Math.random() * this.canvasWidth;
         }
+      }
+
+      updateCanvasSize(width: number, height: number) {
+        this.canvasWidth = width;
+        this.canvasHeight = height;
       }
 
       draw() {
@@ -270,7 +296,7 @@ export default function BackgroundAnimation() {
     
     // Initialize particles
     for (let i = 0; i < streamCount; i++) {
-      dataStreams.push(new DataStream());
+      dataStreams.push(new DataStream(canvasWidth, canvasHeight));
     }
 
     // Animation loop
@@ -278,7 +304,7 @@ export default function BackgroundAnimation() {
     const animate = () => {
       // Clear with slight fade for trail effect
       ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
       // Draw grid
       drawGrid();
