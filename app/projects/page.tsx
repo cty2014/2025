@@ -29,7 +29,7 @@ export default function Projects() {
       description: "Innovative payment platform leveraging AI technology to deliver seamless and secure payment solutions for businesses and consumers.",
       tech: "AI-powered payment processing, intelligent fraud detection, real-time transaction analytics",
       aiApplication: "Utilizing advanced AI algorithms for real-time fraud detection and risk assessment, optimizing payment processing efficiency through intelligent routing and providing comprehensive transaction analytics to enhance payment security and user experience.",
-      link: "http://quispay.com",
+      link: "https://quispay.com",
       category: "Fintech AI",
       gradient: "from-cyan-500 to-blue-500",
       borderColor: "border-cyan-500/20",
