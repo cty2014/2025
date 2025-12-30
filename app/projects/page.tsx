@@ -25,11 +25,11 @@ export default function Projects() {
       glow: "glow-purple",
     },
     {
-      name: "FuturePay",
-      description: "One-stop fintech platform providing AI-driven payment solutions and cross-border financial services.",
-      tech: "AI risk control system, intelligent payment routing, blockchain technology",
-      aiApplication: "Using AI for real-time risk assessment and fraud detection, optimizing payment routing through intelligent algorithms to provide secure and efficient cross-border payment and currency exchange services.",
-      link: "https://www.futurepay.global/zh",
+      name: "QuisPay",
+      description: "Innovative payment platform leveraging AI technology to deliver seamless and secure payment solutions for businesses and consumers.",
+      tech: "AI-powered payment processing, intelligent fraud detection, real-time transaction analytics",
+      aiApplication: "Utilizing advanced AI algorithms for real-time fraud detection and risk assessment, optimizing payment processing efficiency through intelligent routing and providing comprehensive transaction analytics to enhance payment security and user experience.",
+      link: "http://quispay.com",
       category: "Fintech AI",
       gradient: "from-cyan-500 to-blue-500",
       borderColor: "border-cyan-500/20",
@@ -83,7 +83,7 @@ export default function Projects() {
                   </span>
                 </div>
                 <h2 className={`text-2xl sm:text-3xl font-bold mb-3 sm:mb-4 ${
-                  ["Minerva Electronics", "WooTogether", "FuturePay"].includes(project.name)
+                  ["Minerva Electronics", "WooTogether", "QuisPay"].includes(project.name)
                     ? "text-yellow-200"
                     : "text-white"
                 }`}>{project.name}</h2>
