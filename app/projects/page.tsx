@@ -82,11 +82,26 @@ export default function Projects() {
                     {project.category}
                   </span>
                 </div>
-                <h2 className={`text-2xl sm:text-3xl font-bold mb-3 sm:mb-4 ${
-                  ["Minerva Electronics", "WooTogether", "QuisPay"].includes(project.name)
-                    ? "text-yellow-200"
-                    : "text-white"
-                }`}>{project.name}</h2>
+                {project.link !== "#" ? (
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`text-2xl sm:text-3xl font-bold mb-3 sm:mb-4 block hover:opacity-80 transition-opacity ${
+                      ["Minerva Electronics", "WooTogether", "QuisPay"].includes(project.name)
+                        ? "text-yellow-200"
+                        : "text-white"
+                    }`}
+                  >
+                    {project.name}
+                  </a>
+                ) : (
+                  <h2 className={`text-2xl sm:text-3xl font-bold mb-3 sm:mb-4 ${
+                    ["Minerva Electronics", "WooTogether", "QuisPay"].includes(project.name)
+                      ? "text-yellow-200"
+                      : "text-white"
+                  }`}>{project.name}</h2>
+                )}
                 <p className="text-white/60 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base font-light">{project.description}</p>
                 
                 <div className="mb-4 sm:mb-6 space-y-3 sm:space-y-4">
