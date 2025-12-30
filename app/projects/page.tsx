@@ -110,9 +110,9 @@ export default function Projects() {
                   href={project.link}
                   target={project.link !== "#" ? "_blank" : undefined}
                   rel={project.link !== "#" ? "noopener noreferrer" : undefined}
-                  className={`inline-flex items-center text-sm sm:text-base font-normal transition-all underline underline-offset-4 decoration-white/20 hover:decoration-white/40 ${
+                  className={`inline-flex items-center text-base sm:text-lg md:text-xl font-normal transition-all underline underline-offset-4 decoration-yellow-200/30 hover:decoration-yellow-200/50 ${
                     project.link !== "#"
-                      ? "text-white/60 hover:text-white"
+                      ? "text-yellow-200 hover:text-yellow-100"
                       : "text-white/30 cursor-not-allowed"
                   }`}
                 >
