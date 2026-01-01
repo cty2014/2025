@@ -17,9 +17,9 @@ const {
   description, 
   keywords = 'AI startup, fintech, AI native founders, tech advisory, investment fund, AI applications, startup funding',
   canonicalURL = Astro.url.href,
-  ogImage = '/og-image.jpg',
+  ogImage = 'https://wisecom.biz/og-image.jpg',
   ogType = 'website',
-  ogDescription = description
+  ogDescription = 'First believers in AI Native founders. Investment fund and tech advisory for AI startups.'
 } = Astro.props;
 
 // 如果 title 已經包含 "WiseVenture"，就不重複添加
@@ -38,6 +38,11 @@ const fullTitle = title.includes('WiseVenture') ? title : `${title} | WiseVentur
     
     <!-- Canonical URL -->
     <link rel="canonical" href={canonicalURL} />
+    
+    <!-- Alternate Language Versions -->
+    <link rel="alternate" hreflang="en" href="https://wisecom.biz/en/" />
+    <link rel="alternate" hreflang="zh-TW" href="https://wisecom.biz/zh-tw/" />
+    <link rel="alternate" hreflang="x-default" href="https://wisecom.biz/" />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content={ogType} />
