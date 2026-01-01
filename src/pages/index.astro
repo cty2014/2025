@@ -3,7 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import BackgroundAnimation from '../components/BackgroundAnimation.astro';
 
 const title = 'WiseVenture | AI Startup & Fintech Investment Fund';
-const description = 'WiseVenture provides zero-to-one capital and hands-on tech advisory for AI Native founders in Taiwan. We specialize in Bitfinex Lending strategies and AI infrastructure.';
+const description = 'WiseVenture: First believers in AI Native founders. Zero-to-one capital and hands-on support for AI applications, infrastructure, and developer tools.';
+const ogDescription = 'First believers in AI Native founders. Investment fund and tech advisory for AI startups.';
 const keywords = 'AI startup, fintech startup, AI native founders, fintech investment, AI investment fund, startup funding, tech advisory, AI applications, fintech advisory, AI infrastructure, Bitfinex Lending, Taiwan AI startup';
 ---
 
@@ -11,7 +12,8 @@ const keywords = 'AI startup, fintech startup, AI native founders, fintech inves
   title={title} 
   description={description} 
   keywords={keywords}
-  ogImage="/og-image.jpg"
+  ogDescription={ogDescription}
+  ogImage="https://wisecom.biz/og-image.jpg"
   canonicalURL="https://wisecom.biz"
 >
   <div class="min-h-screen bg-black relative">

@@ -9,6 +9,7 @@ interface Props {
   canonicalURL?: string;
   ogImage?: string;
   ogType?: string;
+  ogDescription?: string;
 }
 
 const { 
@@ -17,7 +18,8 @@ const {
   keywords = 'AI startup, fintech, AI native founders, tech advisory, investment fund, AI applications, startup funding',
   canonicalURL = Astro.url.href,
   ogImage = '/og-image.jpg',
-  ogType = 'website'
+  ogType = 'website',
+  ogDescription = description
 } = Astro.props;
 
 // 如果 title 已經包含 "WiseVenture"，就不重複添加
@@ -41,14 +43,14 @@ const fullTitle = title.includes('WiseVenture') ? title : `${title} | WiseVentur
     <meta property="og:type" content={ogType} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={fullTitle} />
-    <meta property="og:description" content={description} />
+    <meta property="og:description" content={ogDescription} />
     <meta property="og:image" content={new URL(ogImage, Astro.site).href} />
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={canonicalURL} />
     <meta property="twitter:title" content={fullTitle} />
-    <meta property="twitter:description" content={description} />
+    <meta property="twitter:description" content={ogDescription} />
     <meta property="twitter:image" content={new URL(ogImage, Astro.site).href} />
     
     <!-- Additional SEO -->
