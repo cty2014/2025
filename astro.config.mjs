@@ -1,6 +1,5 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
-import react from '@astrojs/react';
 import vercel from '@astrojs/vercel';
 import sitemap from '@astrojs/sitemap';
 
@@ -10,7 +9,6 @@ export default defineConfig({
     tailwind({
       applyBaseStyles: true,
     }),
-    react(),
     sitemap(),
   ],
   output: 'server',
@@ -23,9 +21,6 @@ export default defineConfig({
     },
     resolve: {
       preserveSymlinks: false,
-    },
-    ssr: {
-      noExternal: ['@astrojs/react'],
     },
   },
 });
