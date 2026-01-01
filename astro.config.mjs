@@ -19,6 +19,12 @@ export default defineConfig({
     build: {
       cssMinify: true,
     },
+    resolve: {
+      preserveSymlinks: false,
+    },
+    ssr: {
+      noExternal: ['@astrojs/react'],
+    },
   },
 });
 

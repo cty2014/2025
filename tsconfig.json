@@ -6,12 +6,17 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "skipLibCheck": true
   },
+  "include": [
+    "src/**/*"
+  ],
   "exclude": [
     "app/**/*",
     "components/**/*",
     "node_modules",
-    "dist"
+    "dist",
+    ".astro"
   ]
 }
