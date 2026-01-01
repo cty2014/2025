@@ -1,0 +1,250 @@
+---
+---
+
+<canvas
+  id="background-canvas"
+  class="fixed top-0 left-0 pointer-events-none z-0 w-full h-full"
+  style="background: transparent; min-height: 100vh;"
+></canvas>
+
+<script>
+  const canvas = document.getElementById('background-canvas') as HTMLCanvasElement;
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  let canvasWidth = window.innerWidth;
+  let canvasHeight = window.innerHeight;
+
+  const resizeCanvas = () => {
+    canvasWidth = window.innerWidth;
+    canvasHeight = Math.max(
+      window.innerHeight,
+      document.documentElement.scrollHeight,
+      document.body.scrollHeight
+    );
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+  };
+
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  // Particle system
+  class Particle {
+    x: number;
+    y: number;
+    vx: number;
+    vy: number;
+    radius: number;
+    opacity: number;
+    targetOpacity: number;
+
+    constructor() {
+      this.x = Math.random() * canvasWidth;
+      this.y = Math.random() * canvasHeight;
+      this.vx = (Math.random() - 0.5) * 0.5;
+      this.vy = (Math.random() - 0.5) * 0.5;
+      this.radius = Math.random() * 1.5 + 0.5;
+      this.opacity = Math.random() * 0.3 + 0.1;
+      this.targetOpacity = this.opacity;
+    }
+
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+
+      if (this.x < 0) this.x = canvasWidth;
+      if (this.x > canvasWidth) this.x = 0;
+      if (this.y < 0) this.y = canvasHeight;
+      if (this.y > canvasHeight) this.y = 0;
+
+      this.opacity += (this.targetOpacity - this.opacity) * 0.02;
+      if (Math.random() < 0.005) {
+        this.targetOpacity = Math.random() * 0.3 + 0.1;
+      }
+    }
+
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+      ctx.fill();
+    }
+  }
+
+  class Connection {
+    particle1: Particle;
+    particle2: Particle;
+    distance: number;
+    opacity: number;
+
+    constructor(p1: Particle, p2: Particle) {
+      this.particle1 = p1;
+      this.particle2 = p2;
+      this.distance = Math.sqrt(
+        Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2)
+      );
+      this.opacity = 0;
+    }
+
+    update() {
+      this.distance = Math.sqrt(
+        Math.pow(this.particle1.x - this.particle2.x, 2) +
+          Math.pow(this.particle1.y - this.particle2.y, 2)
+      );
+      const maxDistance = 200;
+      if (this.distance < maxDistance) {
+        this.opacity = (1 - this.distance / maxDistance) * 0.15;
+      } else {
+        this.opacity = 0;
+      }
+    }
+
+    draw() {
+      if (this.opacity === 0) return;
+      ctx.beginPath();
+      ctx.moveTo(this.particle1.x, this.particle1.y);
+      ctx.lineTo(this.particle2.x, this.particle2.y);
+      ctx.strokeStyle = `rgba(255, 255, 255, ${this.opacity})`;
+      ctx.lineWidth = 0.5;
+      ctx.stroke();
+    }
+  }
+
+  const gridSize = 50;
+  let gridOffsetX = 0;
+  let gridOffsetY = 0;
+
+  const getParticleCount = () => Math.max(80, Math.floor((canvasWidth * canvasHeight) / 15000));
+  let particles: Particle[] = [];
+  const connections: Connection[] = [];
+
+  const initializeParticles = () => {
+    const particleCount = getParticleCount();
+    particles = [];
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+
+    connections.length = 0;
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        connections.push(new Connection(particles[i], particles[j]));
+      }
+    }
+  };
+
+  initializeParticles();
+
+  const drawGrid = () => {
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
+    ctx.lineWidth = 0.5;
+
+    for (let x = gridOffsetX % gridSize; x < canvasWidth; x += gridSize) {
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, canvasHeight);
+      ctx.stroke();
+    }
+
+    for (let y = gridOffsetY % gridSize; y < canvasHeight; y += gridSize) {
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(canvasWidth, y);
+      ctx.stroke();
+    }
+
+    gridOffsetX += 0.2;
+    gridOffsetY += 0.2;
+  };
+
+  let scanLineY = 0;
+  const drawScanLines = () => {
+    const gradient = ctx.createLinearGradient(0, scanLineY - 100, 0, scanLineY + 100);
+    gradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
+    gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.02)');
+    gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, scanLineY - 100, canvasWidth, 200);
+
+    scanLineY += 1;
+    if (scanLineY > canvasHeight + 100) {
+      scanLineY = -100;
+    }
+  };
+
+  class DataStream {
+    x: number;
+    y: number;
+    speed: number;
+    size: number;
+    opacity: number;
+
+    constructor() {
+      this.x = Math.random() * canvasWidth;
+      this.y = Math.random() * canvasHeight;
+      this.speed = Math.random() * 1.5 + 0.5;
+      this.size = Math.random() * 0.8 + 0.3;
+      this.opacity = Math.random() * 0.2 + 0.05;
+    }
+
+    update() {
+      this.y += this.speed;
+      if (this.y > canvasHeight + 10) {
+        this.y = -10;
+        this.x = Math.random() * canvasWidth;
+      }
+    }
+
+    draw() {
+      ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+      ctx.fillRect(this.x - this.size / 2, this.y - this.size / 2, this.size, this.size);
+    }
+  }
+
+  const dataStreams: DataStream[] = [];
+  const streamCount = 500;
+
+  for (let i = 0; i < streamCount; i++) {
+    dataStreams.push(new DataStream());
+  }
+
+  const animate = () => {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+    drawGrid();
+    drawScanLines();
+
+    const viewportMargin = 100;
+    const visibleStreams = dataStreams.filter((stream) => {
+      return stream.y >= -viewportMargin && stream.y <= canvasHeight + viewportMargin;
+    });
+
+    dataStreams.forEach((stream) => {
+      stream.update();
+    });
+
+    visibleStreams.forEach((stream) => {
+      stream.draw();
+    });
+
+    particles.forEach((particle) => {
+      particle.update();
+      particle.draw();
+    });
+
+    connections.forEach((connection) => {
+      connection.update();
+      connection.draw();
+    });
+
+    requestAnimationFrame(animate);
+  };
+
+  animate();
+</script>
+

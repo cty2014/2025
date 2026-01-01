@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BackgroundAnimation from '../components/BackgroundAnimation.astro';
+
+const title = 'AI Startup & Fintech Investment Fund | WiseVenture';
+const description = 'Leading AI startup and fintech investment fund providing zero to one capital and hands-on support for AI Native founders. We invest in innovative AI startups, fintech companies, and provide tech advisory services.';
+const keywords = 'AI startup, fintech startup, AI native founders, fintech investment, AI investment fund, startup funding, tech advisory, AI applications, fintech advisory, AI infrastructure';
+---
+
+<BaseLayout title={title} description={description} keywords={keywords}>
+  <div class="min-h-screen bg-black relative">
+    <BackgroundAnimation />
+    
+    <!-- Hero Section -->
+    <section class="relative z-10 min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
+      <div class="max-w-5xl mx-auto text-center">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white mb-6 sm:mb-8 leading-tight">
+          First Believers in<br />
+          AI Native Founders
+        </h1>
+        <p class="text-lg sm:text-xl md:text-2xl text-white/60 mb-8 sm:mb-12 max-w-3xl mx-auto font-light leading-relaxed">
+          Zero to one capital and hands-on support for builders of AI Native applications, infrastructure, and developer tools.
+        </p>
+        <div class="mb-8 sm:mb-12">
+          <p class="text-base sm:text-lg md:text-xl text-white/50 mb-4 font-normal">
+            50% Investment Fund<span class="text-white/40 text-sm sm:text-base ml-2">Bitfinex Lending</span> + 50% Tech Advisory
+          </p>
+        </div>
+        <a
+          href="/about"
+          class="inline-block text-white/60 hover:text-white text-base sm:text-lg font-normal transition-colors underline underline-offset-4 decoration-white/20 hover:decoration-white/40"
+        >
+          Learn more
+        </a>
+      </div>
+    </section>
+
+    <!-- Mission Statement -->
+    <section class="relative z-10 py-20 sm:py-24 md:py-32 bg-black border-t border-white/15">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 sm:mb-8 leading-tight">
+          Our aim is to be the most important partner to the most impactful AI and infrastructure companies
+        </h2>
+        <div class="mt-12 sm:mt-16">
+          <a
+            href="/projects"
+            class="text-white/70 hover:text-white text-base sm:text-lg font-medium transition-colors underline underline-offset-4 decoration-white/30 hover:decoration-white/60"
+          >
+            Our portfolio companies
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+

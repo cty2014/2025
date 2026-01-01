@@ -1,0 +1,144 @@
+---
+interface Props {
+  className?: string;
+  showText?: boolean;
+  size?: 'sm' | 'md' | 'lg';
+  variant?: 'default' | 'icon-only';
+}
+
+const { className = '', showText = true, size = 'md', variant = 'default' } = Astro.props;
+
+const sizeClasses = {
+  sm: 'text-xs sm:text-sm',
+  md: 'text-sm sm:text-base',
+  lg: 'text-base sm:text-lg',
+};
+
+const logoSizes = {
+  sm: { width: 32, height: 32, strokeWidth: 1.5 },
+  md: { width: 40, height: 40, strokeWidth: 2 },
+  lg: { width: 64, height: 64, strokeWidth: 2.5 },
+};
+
+const currentSize = logoSizes[size];
+
+const hexagonPath = (size: number) => {
+  const centerX = size / 2;
+  const centerY = size / 2;
+  const radius = size * 0.4;
+  const points = [];
+  for (let i = 0; i < 6; i++) {
+    const angle = (Math.PI / 3) * i - Math.PI / 6;
+    const x = centerX + radius * Math.cos(angle);
+    const y = centerY + radius * Math.sin(angle);
+    points.push(`${i === 0 ? 'M' : 'L'} ${x} ${y}`);
+  }
+  return points.join(' ') + ' Z';
+};
+
+const viewBoxSize = 100;
+---
+
+{variant === 'icon-only' ? (
+  <a href="/" class={`inline-block group ${className}`}>
+    <div class="relative">
+      <div class="absolute inset-0 blur-lg opacity-20">
+        <svg width={currentSize.width} height={currentSize.height} viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`} class="w-full h-full">
+          <path
+            d={hexagonPath(viewBoxSize)}
+            fill="white"
+            opacity="0.3"
+          />
+        </svg>
+      </div>
+      <svg
+        width={currentSize.width}
+        height={currentSize.height}
+        viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`}
+        class="relative"
+      >
+        <path
+          d={hexagonPath(viewBoxSize)}
+          fill="none"
+          stroke="white"
+          stroke-width={currentSize.strokeWidth * 2.5}
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="drop-shadow-[0_0_3px_rgba(255,255,255,0.5)]"
+          opacity="0.95"
+        />
+        <text
+          x={viewBoxSize / 2}
+          y={viewBoxSize / 2}
+          text-anchor="middle"
+          dominant-baseline="central"
+          fill="white"
+          class="drop-shadow-[0_0_4px_rgba(255,255,255,0.6)]"
+          font-size={viewBoxSize * 0.35}
+          font-weight="700"
+          font-family="var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif"
+          letter-spacing="-0.05em"
+          opacity="0.95"
+        >
+          WV
+        </text>
+      </svg>
+    </div>
+  </a>
+) : (
+  <a href="/" class={`flex flex-col items-center group ${className}`}>
+    <div class="mb-2">
+      <div class="relative">
+        <div class="absolute inset-0 blur-lg opacity-20">
+          <svg width={currentSize.width} height={currentSize.height} viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`} class="w-full h-full">
+            <path
+              d={hexagonPath(viewBoxSize)}
+              fill="white"
+              opacity="0.3"
+            />
+          </svg>
+        </div>
+        <svg
+          width={currentSize.width}
+          height={currentSize.height}
+          viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`}
+          class="relative"
+        >
+          <path
+            d={hexagonPath(viewBoxSize)}
+            fill="none"
+            stroke="white"
+            stroke-width={currentSize.strokeWidth * 2.5}
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="drop-shadow-[0_0_3px_rgba(255,255,255,0.5)]"
+            opacity="0.95"
+          />
+          <text
+            x={viewBoxSize / 2}
+            y={viewBoxSize / 2}
+            text-anchor="middle"
+            dominant-baseline="central"
+            fill="white"
+            class="drop-shadow-[0_0_4px_rgba(255,255,255,0.6)]"
+            font-size={viewBoxSize * 0.35}
+            font-weight="700"
+            font-family="var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif"
+            letter-spacing="-0.05em"
+            opacity="0.95"
+          >
+            WV
+          </text>
+        </svg>
+      </div>
+    </div>
+    {showText && (
+      <div class="text-center">
+        <span class={`font-bold ${sizeClasses[size]} tracking-wider text-white drop-shadow-[0_0_4px_rgba(255,255,255,0.5)]`}>
+          WISE VENTURE
+        </span>
+      </div>
+    )}
+  </a>
+)}
+

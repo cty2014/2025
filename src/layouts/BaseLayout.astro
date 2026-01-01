@@ -1,0 +1,110 @@
+---
+import { Inter, Space_Grotesk } from 'google-fonts/google-fonts';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  keywords?: string;
+  canonicalURL?: string;
+  ogImage?: string;
+  ogType?: string;
+}
+
+const { 
+  title, 
+  description, 
+  keywords = 'AI startup, fintech, AI native founders, tech advisory, investment fund, AI applications, startup funding',
+  canonicalURL = Astro.url.href,
+  ogImage = '/og-image.jpg',
+  ogType = 'website'
+} = Astro.props;
+
+const fullTitle = `${title} | WiseVenture`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalURL} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(ogImage, Astro.site).href} />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={fullTitle} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(ogImage, Astro.site).href} />
+    
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="WiseVenture" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="language" content="English" />
+    <meta name="revisit-after" content="7 days" />
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "WiseVenture",
+      "url": Astro.site?.href,
+      "logo": new URL("/logo.png", Astro.site).href,
+      "description": "Investment fund and tech advisory firm focused on AI startups, fintech, and AI native applications.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "8F, No. 42, Xuchang Street",
+        "addressLocality": "Zhongzheng District",
+        "addressRegion": "Taipei",
+        "addressCountry": "Taiwan"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "info@wisecom.biz",
+        "contactType": "Customer Service"
+      }
+    })} />
+    
+    <title>{fullTitle}</title>
+    
+    <Inter />
+    <Space_Grotesk />
+  </head>
+  <body class="antialiased min-h-screen flex flex-col bg-black">
+    <Navigation />
+    <main class="flex-grow">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style is:global>
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  body {
+    margin: 0;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+</style>
+

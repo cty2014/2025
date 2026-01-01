@@ -1,0 +1,88 @@
+---
+---
+
+<canvas
+  id="projects-background-canvas"
+  class="fixed top-0 left-0 pointer-events-none z-0 w-full h-full"
+  style="background: transparent; min-height: 100vh;"
+></canvas>
+
+<script>
+  const canvas = document.getElementById('projects-background-canvas') as HTMLCanvasElement;
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  let canvasWidth = window.innerWidth;
+  let canvasHeight = window.innerHeight;
+
+  const resizeCanvas = () => {
+    canvasWidth = window.innerWidth;
+    canvasHeight = Math.max(
+      window.innerHeight,
+      document.documentElement.scrollHeight,
+      document.body.scrollHeight
+    );
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+  };
+
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  class Particle {
+    x: number;
+    y: number;
+    vx: number;
+    vy: number;
+    radius: number;
+    opacity: number;
+
+    constructor() {
+      this.x = Math.random() * canvasWidth;
+      this.y = Math.random() * canvasHeight;
+      this.vx = (Math.random() - 0.5) * 0.3;
+      this.vy = (Math.random() - 0.5) * 0.3;
+      this.radius = Math.random() * 1 + 0.5;
+      this.opacity = Math.random() * 0.2 + 0.05;
+    }
+
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+
+      if (this.x < 0) this.x = canvasWidth;
+      if (this.x > canvasWidth) this.x = 0;
+      if (this.y < 0) this.y = canvasHeight;
+      if (this.y > canvasHeight) this.y = 0;
+    }
+
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+      ctx.fill();
+    }
+  }
+
+  const particles: Particle[] = [];
+  for (let i = 0; i < 50; i++) {
+    particles.push(new Particle());
+  }
+
+  const animate = () => {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+    particles.forEach((particle) => {
+      particle.update();
+      particle.draw();
+    });
+
+    requestAnimationFrame(animate);
+  };
+
+  animate();
+</script>
+
