@@ -59,6 +59,7 @@
     }
 
     draw() {
+      if (!ctx) return;
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
       ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
@@ -72,6 +73,7 @@
   }
 
   const animate = () => {
+    if (!ctx) return;
     ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
     ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 

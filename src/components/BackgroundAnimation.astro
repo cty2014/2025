@@ -67,6 +67,7 @@
     }
 
     draw() {
+      if (!ctx) return;
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
       ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
@@ -103,7 +104,7 @@
     }
 
     draw() {
-      if (this.opacity === 0) return;
+      if (this.opacity === 0 || !ctx) return;
       ctx.beginPath();
       ctx.moveTo(this.particle1.x, this.particle1.y);
       ctx.lineTo(this.particle2.x, this.particle2.y);
@@ -139,6 +140,7 @@
   initializeParticles();
 
   const drawGrid = () => {
+    if (!ctx) return;
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
     ctx.lineWidth = 0.5;
 
@@ -162,6 +164,7 @@
 
   let scanLineY = 0;
   const drawScanLines = () => {
+    if (!ctx) return;
     const gradient = ctx.createLinearGradient(0, scanLineY - 100, 0, scanLineY + 100);
     gradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
     gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.02)');
@@ -200,6 +203,7 @@
     }
 
     draw() {
+      if (!ctx) return;
       ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
       ctx.fillRect(this.x - this.size / 2, this.y - this.size / 2, this.size, this.size);
     }
@@ -213,6 +217,7 @@
   }
 
   const animate = () => {
+    if (!ctx) return;
     ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
     ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
