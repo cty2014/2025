@@ -27,3 +27,4 @@ ${pages.map(page => `  <url>
   });
 };
 
+
