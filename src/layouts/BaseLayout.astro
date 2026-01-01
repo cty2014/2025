@@ -20,7 +20,8 @@ const {
   ogType = 'website'
 } = Astro.props;
 
-const fullTitle = `${title} | WiseVenture`;
+// 如果 title 已經包含 "WiseVenture"，就不重複添加
+const fullTitle = title.includes('WiseVenture') ? title : `${title} | WiseVenture`;
 ---
 
 <!doctype html>

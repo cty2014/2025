@@ -19,8 +19,30 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "WiseVenture - Investment Fund & Tech Advisory",
-  description: "Investment fund and tech advisory firm focused on tech startups, including Fintech and AI applications. Founded in 2020.",
+  title: "WiseVenture | AI Startup & Fintech Investment Fund",
+  description: "WiseVenture provides zero-to-one capital and hands-on tech advisory for AI Native founders in Taiwan. We specialize in Bitfinex Lending strategies and AI infrastructure.",
+  openGraph: {
+    title: "WiseVenture | AI Startup & Fintech Investment Fund",
+    description: "WiseVenture provides zero-to-one capital and hands-on tech advisory for AI Native founders in Taiwan. We specialize in Bitfinex Lending strategies and AI infrastructure.",
+    url: "https://wisecom.biz",
+    siteName: "WiseVenture",
+    images: [
+      {
+        url: "https://wisecom.biz/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "WiseVenture - AI Startup & Fintech Investment Fund",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "WiseVenture | AI Startup & Fintech Investment Fund",
+    description: "WiseVenture provides zero-to-one capital and hands-on tech advisory for AI Native founders in Taiwan. We specialize in Bitfinex Lending strategies and AI infrastructure.",
+    images: ["https://wisecom.biz/og-image.jpg"],
+  },
 };
 
 export default function RootLayout({

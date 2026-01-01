@@ -2,12 +2,18 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BackgroundAnimation from '../components/BackgroundAnimation.astro';
 
-const title = 'AI Startup & Fintech Investment Fund | WiseVenture';
-const description = 'Leading AI startup and fintech investment fund providing zero to one capital and hands-on support for AI Native founders. We invest in innovative AI startups, fintech companies, and provide tech advisory services.';
-const keywords = 'AI startup, fintech startup, AI native founders, fintech investment, AI investment fund, startup funding, tech advisory, AI applications, fintech advisory, AI infrastructure';
+const title = 'WiseVenture | AI Startup & Fintech Investment Fund';
+const description = 'WiseVenture provides zero-to-one capital and hands-on tech advisory for AI Native founders in Taiwan. We specialize in Bitfinex Lending strategies and AI infrastructure.';
+const keywords = 'AI startup, fintech startup, AI native founders, fintech investment, AI investment fund, startup funding, tech advisory, AI applications, fintech advisory, AI infrastructure, Bitfinex Lending, Taiwan AI startup';
 ---
 
-<BaseLayout title={title} description={description} keywords={keywords}>
+<BaseLayout 
+  title={title} 
+  description={description} 
+  keywords={keywords}
+  ogImage="/og-image.jpg"
+  canonicalURL="https://wisecom.biz"
+>
   <div class="min-h-screen bg-black relative">
     <BackgroundAnimation />
     
