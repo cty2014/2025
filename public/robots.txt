@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://wisecom.biz/sitemap-index.xml
+
