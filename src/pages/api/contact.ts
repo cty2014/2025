@@ -79,6 +79,7 @@ export const POST: APIRoute = async ({ request }) => {
         import.meta.env.RESEND_FROM_EMAIL ||
         'WiseCom Website <onboarding@resend.dev>',
       to: 'info@wisecom.biz',
+      cc: 'biz@wisecom.biz',
       replyTo: email,
       subject: `來自網站聯絡表單的訊息${company ? ` - ${esc(company)}` : ''}`,
       html: `
