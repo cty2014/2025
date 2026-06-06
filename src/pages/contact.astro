@@ -29,6 +29,11 @@ const keywords = 'contact AI startup fund, fintech investment contact, startup f
           <h2 class="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6">Send Message</h2>
           <form id="contact-form" class="space-y-4 sm:space-y-6">
             <div id="form-status"></div>
+            <!-- Honeypot：給機器人填的隱藏陷阱欄位，正常使用者看不到 -->
+            <div class="hidden" aria-hidden="true">
+              <label for="website">Website</label>
+              <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+            </div>
             <div>
               <label for="name" class="block text-xs sm:text-sm font-medium text-white/60 mb-2">
                 Name *
@@ -152,6 +157,7 @@ const keywords = 'contact AI startup fund, fintech investment contact, startup f
         email: (document.getElementById('email') as HTMLInputElement).value,
         company: (document.getElementById('company') as HTMLInputElement).value,
         message: (document.getElementById('message') as HTMLTextAreaElement).value,
+        website: (document.getElementById('website') as HTMLInputElement).value,
       };
 
       submitBtn.disabled = true;
